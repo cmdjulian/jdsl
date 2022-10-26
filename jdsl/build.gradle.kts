@@ -2,6 +2,8 @@ plugins {
     kotlin("jvm") version "1.7.20"
 
     `java-library`
+    `maven-publish`
+
     // Gradle task "dependencyCheckAnalyze" to check for security CVEs in dependencies
     id("org.owasp.dependencycheck") version "7.3.0"
     // Check for dependency updates via task "dependencyUpdates --refresh-dependencies"
@@ -78,4 +80,16 @@ fun listConfigurationDependencies(configuration: Configuration) {
         out.append("No dependencies found")
     }
     println(out)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "de.cmdjulian"
+            artifactId = "jdsl"
+            version = "1.0.0"
+
+            from(components["java"])
+        }
+    }
 }
