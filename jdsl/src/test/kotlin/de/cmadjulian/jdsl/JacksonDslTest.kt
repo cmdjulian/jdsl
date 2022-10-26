@@ -20,8 +20,8 @@ internal class JacksonDslTest {
             set<ArrayNode>(
                 "fizz",
                 JsonNodeFactory.arrayNode(2).apply {
-                    add(1L)
-                    add(2L)
+                    add(1)
+                    add(2)
                 }
             )
         }
