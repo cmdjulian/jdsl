@@ -441,7 +441,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 ### Gradle template
-.gradle
 **/build/
 !src/**/build/
 
