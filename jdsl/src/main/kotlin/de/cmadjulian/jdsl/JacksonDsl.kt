@@ -25,6 +25,8 @@ sealed class JacksonNodeBuilder<T : JsonNode>(internal val node: T) {
     }
 }
 
+internal class GeneralJacksonNodeBuilder(node: JsonNode) : JacksonNodeBuilder<JsonNode>(node)
+
 @Suppress("FunctionName", "kotlin:S100", "MemberVisibilityCanBePrivate")
 class JacksonObjectNodeBuilder private constructor(node: JacksonObjectNode = JsonNodeFactory.objectNode()) :
     JacksonNodeBuilder<JacksonObjectNode>(node) {
@@ -93,6 +95,22 @@ object arr {
 object `null` : NullNode()
 
 // value
+fun <T> json(generator: () -> T): JsonNode = json(Transformer.JsonNode(), generator)
+fun <T, U> json(transformer: Transformer<T, in JsonNode>, generator: () -> U): T {
+    val node = when (val value = generator()) {
+        `null` -> `null`
+        is JsonNode -> value
+        is Boolean -> json(value)
+        is Enum<*> -> json(value)
+        is String -> json(value)
+        is Temporal -> json(value)
+        is Number -> json(value)
+        else -> JsonNodeFactory.pojoNode(value)
+    }
+
+    return transformer.process(GeneralJacksonNodeBuilder(node))
+}
+
 fun json(value: `null`): ValueNode = value
 fun json(value: Boolean): ValueNode = JsonNodeFactory.booleanNode(value)
 fun json(value: Enum<*>): ValueNode = JsonNodeFactory.textNode(value.name)

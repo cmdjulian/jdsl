@@ -57,7 +57,7 @@ internal class JacksonDslTest {
               "integer" : 1337,
               "boolean" : true,
               "nullable" : null,
-              "float" : 1337.0,
+              "float" : 69.69,
               "nested-object" : {
                 "fizz" : "buzz"
               },
@@ -67,7 +67,11 @@ internal class JacksonDslTest {
               }, {
                 "name" : "steve rogers"
               } ],
-              "empty-arr" : [ ]
+              "empty-arr" : [ ],
+              "pojo" : {
+                "first" : "airbus",
+                "second" : "boeing"
+              }
             }
         """.trimIndent()
 
@@ -76,7 +80,7 @@ internal class JacksonDslTest {
             "integer" `=` 1337
             "boolean" `=` true
             "nullable" `=` `null`
-            "float" `=` 1337.0
+            "float" `=` 69.69
             "nested-object" `=` obj {
                 "fizz" `=` "buzz"
             }
@@ -86,6 +90,29 @@ internal class JacksonDslTest {
                 obj { "name" `=` "steve rogers" }
             ]
             "empty-arr" `=` arr
+            "pojo" `=` json { Pair("airbus", "boeing") }
+        } shouldBe expected
+    }
+
+    @Test
+    fun json() {
+        json(transformer = Transformer.String) { 5 } shouldBe "5"
+        json { 5 } shouldBe JsonNodeFactory.numberNode(5)
+    }
+
+    @Test
+    fun jsonDsl() {
+        @Language("JSON")
+        val expected = """
+            {
+              "fizz" : "buzz"
+            }
+        """.trimIndent()
+
+        json(transformer = Transformer.String) {
+            obj {
+                "fizz" `=` "buzz"
+            }
         } shouldBe expected
     }
 }

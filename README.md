@@ -73,15 +73,6 @@ dependencies {
 
 ## DSL
 
-## literals
-
-Literals are not required to be used in the dsl. However, if you need an instance of a `JsonNode`, this can be a quick
-way to achieve that.
-
-```kotlin
-json(5) // <-- ValueNode 
-```
-
 ### array
 
 ```kotlin
@@ -111,6 +102,18 @@ obj {
 }
 ```
 
+## literals
+
+Literals are not required to be used in the dsl. However, if you need an instance of a `JsonNode`, this can be a quick
+way to achieve that.  
+You can also use it top convert any pojo to json.
+
+```kotlin
+json(5)             // <-- ValueNode
+json { 5 }          // <-- JsonNode
+json { Pair(1, 2) } // <-- JsonNode
+```
+
 ### mixed example
 
 ```kotlin
@@ -131,6 +134,8 @@ obj {
             obj { "name" `=` "tony stark" },
             obj { "name" `=` "steve rogers" }
     ]
+    "empty-arr" `=` arr
+    "pojo" `=` json { Pair("airbus", "boeing") }
 }
 
 ```
@@ -161,7 +166,12 @@ this results in the following JSON:
     {
       "name": "steve rogers"
     }
-  ]
+  ],
+  "empty-arr": [],
+  "pojo": {
+    "first": "airbus",
+    "second": "boeing"
+  }
 }
 ```
 
@@ -174,8 +184,15 @@ The following code for instance returns string:
 
 ```kotlin
 obj(Transformer.String) { "fizz" `=` "buzz" } // <-- return type is string
-arr(Transformer.String) { add(1) } // <-- return type is string
+arr(Transformer.Byte) { add(1) }              // <-- return type is byte
+json(Transformer.String) { 5 }                // <-- return type is string
 ```
 
 The library includes transformers for `String` and `Byte`. However, if you for instance want to convert json to CSV or
 some other format / object, you can provide your own transformer by implementing the `Transformer` interface.
+
+As `arr[]` doesn't support transformer, you can wrap it inside a json block, which in turn does support transformer:
+
+```kotlin
+json(Transformer.Byte) { arr[1, 2, 3] } // <-- return type is Byte
+```
