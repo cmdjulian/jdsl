@@ -6,6 +6,7 @@ Kotlin native DSL for Jackson Object Mapper to describe JSON in code.
 
 ## Adding the Dependency
 
+The library requires at least java 8.  
 The client can be pulled into gradle or maven by using [jitpack](https://jitpack.io/#cmdjulian/jdsl).
 
 <details>
