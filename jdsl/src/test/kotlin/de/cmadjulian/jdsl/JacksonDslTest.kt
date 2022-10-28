@@ -66,7 +66,8 @@ internal class JacksonDslTest {
                 "name" : "tony stark"
               }, {
                 "name" : "steve rogers"
-              } ]
+              } ],
+              "empty-arr" : [ ]
             }
         """.trimIndent()
 
@@ -84,6 +85,7 @@ internal class JacksonDslTest {
                 obj { "name" `=` "tony stark" },
                 obj { "name" `=` "steve rogers" }
             ]
+            "empty-arr" `=` arr
         } shouldBe expected
     }
 }

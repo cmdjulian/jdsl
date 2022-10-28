@@ -73,15 +73,30 @@ dependencies {
 
 ## DSL
 
+## literals
+
+Literals are not required to be used in the dsl. However, if you need an instance of a `JsonNode`, this can be a quick
+way to achieve that.
+
+```kotlin
+json(5) // <-- ValueNode 
+```
+
 ### array
 
 ```kotlin
 // empty array '[ ]'
+arr
 arr()
 arr { }
 
 // results in '[1, 2, 3]'
 arr[1, 2, 3]
+arr {
+    add(1)
+    add(2)
+    add(3)
+}
 ```
 
 ### object

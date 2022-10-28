@@ -35,6 +35,7 @@ class JacksonObjectNodeBuilder private constructor(node: JacksonObjectNode = Jso
             transformer.process(JacksonObjectNodeBuilder().apply(init))
     }
 
+    infix fun String.`=`(value: arr) = put(this, value())
     infix fun String.`=`(value: Boolean) = put(this, value)
     infix fun String.`=`(value: Enum<*>) = put(this, value)
     infix fun String.`=`(value: JsonNode) = put(this, value)
@@ -42,6 +43,7 @@ class JacksonObjectNodeBuilder private constructor(node: JacksonObjectNode = Jso
     infix fun String.`=`(value: String) = put(this, value)
     infix fun String.`=`(value: Temporal) = put(this, value)
 
+    fun put(key: String, value: arr) = put(key, value())
     fun put(key: String, value: Boolean) = put(key, json(value))
     fun put(key: String, value: Enum<*>) = put(key, json(value))
     fun put(key: String, value: Number) = put(key, json(value))
@@ -91,6 +93,7 @@ object arr {
 object `null` : NullNode()
 
 // value
+fun json(value: `null`): ValueNode = value
 fun json(value: Boolean): ValueNode = JsonNodeFactory.booleanNode(value)
 fun json(value: Enum<*>): ValueNode = JsonNodeFactory.textNode(value.name)
 fun json(value: String): ValueNode = JsonNodeFactory.textNode(value)
