@@ -174,6 +174,7 @@ The following code for instance returns string:
 
 ```kotlin
 obj(Transformer.String) { "fizz" `=` "buzz" } // <-- return type is string
+arr(Transformer.String) { add(1) } // <-- return type is string
 ```
 
 The library includes transformers for `String` and `Byte`. However, if you for instance want to convert json to CSV or
