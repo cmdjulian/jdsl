@@ -82,6 +82,7 @@ object arr {
     operator fun get(vararg elements: Number): ArrayNode = JacksonArrayNodeBuilder.arr { elements.forEach(::add) }
     operator fun get(vararg elements: String): ArrayNode = JacksonArrayNodeBuilder.arr { elements.forEach(::add) }
     operator fun get(vararg elements: Temporal): ArrayNode = JacksonArrayNodeBuilder.arr { elements.forEach(::add) }
+    operator fun invoke(): ArrayNode = JacksonArrayNodeBuilder.arr { }
 }
 
 // null

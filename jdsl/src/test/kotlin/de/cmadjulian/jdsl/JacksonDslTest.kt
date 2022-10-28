@@ -3,6 +3,7 @@ package de.cmadjulian.jdsl
 import com.fasterxml.jackson.databind.node.ArrayNode
 import de.cmadjulian.jdsl.JacksonObjectNodeBuilder.Companion.obj
 import io.kotest.matchers.shouldBe
+import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
 import com.fasterxml.jackson.databind.node.JsonNodeFactory.instance as JsonNodeFactory
 
@@ -13,6 +14,7 @@ internal class JacksonDslTest {
         val node = obj {
             "foo" `=` "bar"
             "fizz" `=` arr[1, 2]
+            "boo" `=` arr()
         }
 
         node shouldBe JsonNodeFactory.objectNode().apply {
@@ -24,6 +26,7 @@ internal class JacksonDslTest {
                     add(2)
                 }
             )
+            set<ArrayNode>("boo", JsonNodeFactory.arrayNode(0))
         }
     }
 
@@ -43,5 +46,44 @@ internal class JacksonDslTest {
               "test" : null
             }
         """.trimIndent()
+    }
+
+    @Test
+    fun example() {
+        @Language("JSON")
+        val expected = """
+            {
+              "foo" : "bar",
+              "integer" : 1337,
+              "boolean" : true,
+              "nullable" : null,
+              "float" : 1337.0,
+              "nested-object" : {
+                "fizz" : "buzz"
+              },
+              "array-of-numbers" : [ 1, 2, 3 ],
+              "array-of-objects" : [ {
+                "name" : "tony stark"
+              }, {
+                "name" : "steve rogers"
+              } ]
+            }
+        """.trimIndent()
+
+        obj(Transformer.String) {
+            "foo" `=` "bar"
+            "integer" `=` 1337
+            "boolean" `=` true
+            "nullable" `=` `null`
+            "float" `=` 1337.0
+            "nested-object" `=` obj {
+                "fizz" `=` "buzz"
+            }
+            "array-of-numbers" `=` arr[1, 2, 3]
+            "array-of-objects" `=` arr[
+                obj { "name" `=` "tony stark" },
+                obj { "name" `=` "steve rogers" }
+            ]
+        } shouldBe expected
     }
 }
