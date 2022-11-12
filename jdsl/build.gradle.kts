@@ -7,7 +7,7 @@ plugins {
     // Gradle task "dependencyCheckAnalyze" to check for security CVEs in dependencies
     id("org.owasp.dependencycheck") version "7.3.0"
     // Check for dependency updates via task "dependencyUpdates --refresh-dependencies"
-    id("com.github.ben-manes.versions") version "0.43.0"
+    id("com.github.ben-manes.versions") version "0.44.0"
     // linting
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
