@@ -1,15 +1,18 @@
 plugins {
     kotlin("jvm") version "1.7.20"
 
+    jacoco
     `java-library`
     `maven-publish`
 
     // Gradle task "dependencyCheckAnalyze" to check for security CVEs in dependencies
     id("org.owasp.dependencycheck") version "7.3.0"
-    // Check for dependency updates via task "dependencyUpdates --refresh-dependencies"
+    // check for dependency updates via task "dependencyUpdates --refresh-dependencies"
     id("com.github.ben-manes.versions") version "0.44.0"
     // linting
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    // licence scanning
+    id("com.jaredsburrows.license") version "0.9.0"
 }
 
 kotlin {
@@ -38,6 +41,23 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:$kotest")
     testImplementation("io.kotest:kotest-assertions-core-jvm:$kotest")
     testImplementation("io.kotest:kotest-assertions-json-jvm:$kotest")
+}
+
+tasks {
+    val sourcesJar by registering(Jar::class) {
+        dependsOn(JavaPlugin.CLASSES_TASK_NAME)
+        archiveClassifier.set("sources")
+        from(sourceSets["main"].allSource)
+    }
+
+    artifacts {
+        archives(sourcesJar)
+        archives(jar)
+    }
+
+    jar {
+        archiveBaseName.set("jdsl-${project.version}")
+    }
 }
 
 tasks.withType<Test>().configureEach {
@@ -84,12 +104,32 @@ fun listConfigurationDependencies(configuration: Configuration) {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("jdsl") {
             groupId = "de.cmdjulian"
             artifactId = "jdsl"
-            version = "1.0.1"
+            version = "1.0.2"
 
             from(components["java"])
+            artifact(tasks["sourcesJar"])
+
+            pom {
+                packaging = "jar"
+                name.set("jdsl")
+                description.set("kotlin dsl for jackson object mapper to describe json structures typesafe as code")
+                url.set("https://github.com/cmdjulian/jdsl")
+                scm {
+                    url.set("https://github.com/cmdjulian/jdsl")
+                }
+                issueManagement {
+                    url.set("https://github.com/cmdjulian/jdsl/issues")
+                }
+                developers {
+                    developer {
+                        id.set("cmdjulian")
+                        name.set("Julian Goede")
+                    }
+                }
+            }
         }
     }
 }
