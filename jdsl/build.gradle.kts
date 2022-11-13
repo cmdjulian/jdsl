@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
@@ -13,6 +15,8 @@ plugins {
     id("com.github.ben-manes.versions") version "0.44.0"
     // linting
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    // sast
+    id("io.gitlab.arturbosch.detekt") version "1.21.0"
     // licence scanning
     id("com.jaredsburrows.license") version "0.9.0"
 }
@@ -67,6 +71,27 @@ tasks {
 configure<KtlintExtension> {
     version.set("0.45.2")
     enableExperimentalRules.set(true)
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = true
+    config = files("$projectDir/../detekt/config.yml")
+    baseline = file("$projectDir/../detekt/baseline.xml")
+}
+
+tasks.withType<Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        md.required.set(true)
+    }
+}
+
+tasks.withType<Detekt>().configureEach {
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
+}
+tasks.withType<DetektCreateBaselineTask>().configureEach {
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
 }
 
 tasks.withType<Test>().configureEach {

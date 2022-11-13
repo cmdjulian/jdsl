@@ -27,7 +27,7 @@ sealed class JacksonNodeBuilder<T : JsonNode>(internal val node: T) {
 
 internal class GeneralJacksonNodeBuilder(node: JsonNode) : JacksonNodeBuilder<JsonNode>(node)
 
-@Suppress("FunctionName", "kotlin:S100", "MemberVisibilityCanBePrivate")
+@Suppress("FunctionName", "kotlin:S100", "MemberVisibilityCanBePrivate", "TooManyFunctions")
 class JacksonObjectNodeBuilder private constructor(node: JacksonObjectNode = JsonNodeFactory.objectNode()) :
     JacksonNodeBuilder<JacksonObjectNode>(node) {
 
