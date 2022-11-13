@@ -1,5 +1,7 @@
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
+
 plugins {
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version "1.7.21"
 
     jacoco
     `java-library`
@@ -34,7 +36,6 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -61,6 +62,11 @@ tasks {
     jar {
         archiveBaseName.set("jdsl-${project.version}")
     }
+}
+
+configure<KtlintExtension> {
+    version.set("0.45.2")
+    enableExperimentalRules.set(true)
 }
 
 tasks.withType<Test>().configureEach {
