@@ -32,7 +32,7 @@ class JacksonObjectNodeBuilder private constructor(node: JacksonObjectNode = Jso
     JacksonNodeBuilder<JacksonObjectNode>(node) {
 
     companion object {
-        fun obj(init: JacksonObjectNodeBuilder.() -> Unit): JacksonObjectNode = obj(Transformer.ObjectNode, init)
+        fun obj(init: JacksonObjectNodeBuilder.() -> Unit): JacksonObjectNode = obj(Transformers.ObjectNode, init)
         fun <T> obj(transformer: Transformer<T, in ObjectNode>, init: JacksonObjectNodeBuilder.() -> Unit): T =
             transformer.process(JacksonObjectNodeBuilder().apply(init))
     }
@@ -61,7 +61,7 @@ class JacksonArrayNodeBuilder private constructor(array: ArrayNode = JsonNodeFac
     JacksonNodeBuilder<ArrayNode>(array) {
 
     companion object {
-        fun arr(init: JacksonArrayNodeBuilder.() -> Unit): ArrayNode = arr(Transformer.ArrayNode, init)
+        fun arr(init: JacksonArrayNodeBuilder.() -> Unit): ArrayNode = arr(Transformers.ArrayNode, init)
         fun <T> arr(transformer: Transformer<T, in ArrayNode>, init: JacksonArrayNodeBuilder.() -> Unit): T =
             transformer.process(JacksonArrayNodeBuilder().apply(init))
     }
@@ -95,7 +95,7 @@ object arr {
 object `null` : NullNode()
 
 // value
-fun <T> json(generator: () -> T): JsonNode = json(Transformer.JsonNode(), generator)
+fun <T> json(generator: () -> T): JsonNode = json(Transformers.JsonNode(), generator)
 fun <T, U> json(transformer: Transformer<T, in JsonNode>, generator: () -> U): T {
     val node = when (val value = generator()) {
         `null` -> `null`

@@ -184,9 +184,9 @@ instance a pretty printed String or Byte, you can supply a processor.
 The following code for instance returns string:
 
 ```kotlin
-obj(Transformer.String) { "fizz" `=` "buzz" } // <-- return type is string
-arr(Transformer.Byte) { add(1) }              // <-- return type is byte
-json(Transformer.String) { 5 }                // <-- return type is string
+obj(Transformers.String) { "fizz" `=` "buzz" } // <-- return type is string
+arr(Transformers.Byte) { add(1) }              // <-- return type is byte
+json(Transformers.String) { 5 }                // <-- return type is string
 ```
 
 The library includes transformers for `String` and `Byte`. However, if you for instance want to convert json to CSV or
@@ -195,5 +195,39 @@ some other format / object, you can provide your own transformer by implementing
 As `arr[]` doesn't support transformer, you can wrap it inside a json block, which in turn does support transformer:
 
 ```kotlin
-json(Transformer.Byte) { arr[1, 2, 3] } // <-- return type is Byte
+json(Transformers.Byte) { arr[1, 2, 3] } // <-- return type is Byte
+```
+
+You can even use the included `ObjectMapper` `Transformer` to get arbitrary objects from the json
+via `Jackson ObjectMapper`:
+
+```kotlin
+data class FizzBuzz(val fizz: String)
+
+val json: FizzBuzz = obj(transformer = Transformers.ObjectMapper()) {
+    "fizz" `=` "buzz"
+}
+```
+
+Under the hood, an `ObjectMapper` is used to convert the `JsonNode` into a class. As default, the modules `kotlinModule`
+, `Jdk8Module` and `JavaTimeModule` are registered. You can also customize the used mapper:
+
+```kotlin
+val mapper = jsonMapper { }
+
+obj(transformer = Transformers.ObjectMapper(mapper)) {
+    "fizz" `=` "buzz"
+}
+```
+
+You could also create named objects to simplify the mapping for a specific type:
+
+```kotlin
+data class FizzBuzz(val fizz: String)
+
+object FizzBuzzTransformer : Transformers.ObjectMapper<FizzBuzz>(FizzBuzz::class.java)
+
+val json = obj(transformer = FizzBuzzTransformer) {
+    "fizz" `=` "buzz"
+}
 ```

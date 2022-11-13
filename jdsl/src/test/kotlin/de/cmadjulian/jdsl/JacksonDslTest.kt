@@ -32,7 +32,7 @@ internal class JacksonDslTest {
 
     @Test
     fun `pretty print json string`() {
-        val node = obj(Transformer.String) {
+        val node = obj(Transformers.String) {
             "foo" `=` "bar"
             "fizz" `=` arr[1, 2]
             "test" `=` `null`
@@ -75,7 +75,7 @@ internal class JacksonDslTest {
             }
         """.trimIndent()
 
-        obj(Transformer.String) {
+        obj(Transformers.String) {
             "foo" `=` "bar"
             "integer" `=` 1337
             "boolean" `=` true
@@ -96,7 +96,7 @@ internal class JacksonDslTest {
 
     @Test
     fun json() {
-        json(transformer = Transformer.String) { 5 } shouldBe "5"
+        json(transformer = Transformers.String) { 5 } shouldBe "5"
         json { 5 } shouldBe JsonNodeFactory.numberNode(5)
     }
 
@@ -109,10 +109,34 @@ internal class JacksonDslTest {
             }
         """.trimIndent()
 
-        json(transformer = Transformer.String) {
+        json(transformer = Transformers.String) {
             obj {
                 "fizz" `=` "buzz"
             }
         } shouldBe expected
+    }
+
+    @Test
+    fun `object mapping`() {
+        data class FizzBuzz(val fizz: String)
+
+        val json: FizzBuzz = obj(transformer = Transformers.ObjectMapper()) {
+            "fizz" `=` "buzz"
+        }
+
+        json shouldBe FizzBuzz("buzz")
+    }
+
+    @Test
+    fun `static object mapping`() {
+        data class FizzBuzz(val fizz: String)
+
+        val fizzBuzzTransformer = object : Transformers.ObjectMapper<FizzBuzz>(FizzBuzz::class.java) {}
+
+        val json = obj(transformer = fizzBuzzTransformer) {
+            "fizz" `=` "buzz"
+        }
+
+        json shouldBe FizzBuzz("buzz")
     }
 }

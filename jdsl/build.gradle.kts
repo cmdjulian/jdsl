@@ -31,7 +31,10 @@ dependencies {
 
     implementation(platform("com.fasterxml.jackson:jackson-bom:2.14.0"))
     implementation("com.fasterxml.jackson.core:jackson-databind")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -107,7 +110,7 @@ publishing {
         create<MavenPublication>("jdsl") {
             groupId = "de.cmdjulian"
             artifactId = "jdsl"
-            version = "1.0.2"
+            version = "1.0.3"
 
             from(components["java"])
             artifact(tasks["sourcesJar"])
