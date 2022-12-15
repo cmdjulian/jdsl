@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package de.cmadjulian.jdsl
+package de.cmdjulian.jdsl
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ArrayNode

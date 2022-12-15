@@ -1,7 +1,7 @@
-package de.cmadjulian.jdsl
+package de.cmdjulian.jdsl
 
 import com.fasterxml.jackson.databind.node.ArrayNode
-import de.cmadjulian.jdsl.JacksonObjectNodeBuilder.Companion.obj
+import de.cmdjulian.jdsl.JacksonObjectNodeBuilder.Companion.obj
 import io.kotest.matchers.shouldBe
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test

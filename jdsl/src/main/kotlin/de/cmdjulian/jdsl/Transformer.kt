@@ -1,4 +1,4 @@
-package de.cmadjulian.jdsl
+package de.cmdjulian.jdsl
 
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
