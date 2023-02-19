@@ -35,7 +35,7 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation(kotlin("stdlib"))
 
-    implementation(platform("com.fasterxml.jackson:jackson-bom:2.14.1"))
+    implementation(platform("com.fasterxml.jackson:jackson-bom:2.14.2"))
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
