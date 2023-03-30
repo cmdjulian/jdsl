@@ -3,7 +3,7 @@ import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
-    kotlin("jvm") version "1.8.10"
+    kotlin("jvm") version "1.8.20"
 
     jacoco
     `java-library`
