@@ -134,8 +134,8 @@ obj {
     "nested-object" `=` obj { "fizz" `=` "buzz" }
     "array-of-numbers" `=` arr[1, 2, 3]
     "array-of-objects" `=` arr[
-            obj { "name" `=` "tony stark" },
-            obj { "name" `=` "steve rogers" }
+        obj { "name" `=` "tony stark" },
+        obj { "name" `=` "steve rogers" }
     ]
     "empty-arr" `=` arr
     "pojo" `=` json { Pair("airbus", "boeing") }
