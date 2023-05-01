@@ -1,5 +1,7 @@
 [![](https://jitpack.io/v/cmdjulian/jdsl.svg)](https://jitpack.io/#cmdjulian/jdsl)
 
+![](logo.png)
+
 # jdsl
 
 Kotlin native DSL for Jackson Object Mapper to describe JSON in code.
