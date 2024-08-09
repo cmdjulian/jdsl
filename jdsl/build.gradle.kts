@@ -1,9 +1,10 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+import org.gradle.kotlin.dsl.invoke
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "2.0.0"
 
     jacoco
     `java-library`
@@ -22,9 +23,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain {
-        this.languageVersion.set(JavaLanguageVersion.of(8))
-    }
+    jvmToolchain(8)
 }
 
 repositories {
@@ -141,7 +140,7 @@ publishing {
         create<MavenPublication>("jdsl") {
             groupId = "de.cmdjulian"
             artifactId = "jdsl"
-            version = "1.0.3"
+            version = "1.0.4"
 
             from(components["java"])
             artifact(tasks["sourcesJar"])

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test
 import com.fasterxml.jackson.databind.node.JsonNodeFactory.instance as JsonNodeFactory
 
 internal class JacksonDslTest {
-
     @Test
     fun `object node`() {
         val node = obj {
@@ -27,6 +26,18 @@ internal class JacksonDslTest {
                 }
             )
             set<ArrayNode>("boo", JsonNodeFactory.arrayNode(0))
+        }
+    }
+
+    @Test
+    fun `nullable object node`() {
+        val test: String? = null
+        val node = obj {
+            "foo" `=` test
+        }
+
+        node shouldBe JsonNodeFactory.objectNode().apply {
+            putNull("foo")
         }
     }
 

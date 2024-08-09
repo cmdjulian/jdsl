@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.NullNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.node.ValueNode
+import java.time.Duration
 import java.time.temporal.Temporal
+import java.util.*
 import com.fasterxml.jackson.databind.node.JsonNodeFactory.instance as JsonNodeFactory
 import com.fasterxml.jackson.databind.node.ObjectNode as JacksonObjectNode
 
@@ -37,21 +39,25 @@ class JacksonObjectNodeBuilder private constructor(node: JacksonObjectNode = Jso
             transformer.process(JacksonObjectNodeBuilder().apply(init))
     }
 
-    infix fun String.`=`(value: arr) = put(this, value())
-    infix fun String.`=`(value: Boolean) = put(this, value)
-    infix fun String.`=`(value: Enum<*>) = put(this, value)
-    infix fun String.`=`(value: JsonNode) = put(this, value)
-    infix fun String.`=`(value: Number) = put(this, value)
-    infix fun String.`=`(value: String) = put(this, value)
-    infix fun String.`=`(value: Temporal) = put(this, value)
+    infix fun String.`=`(value: arr?) = put(this, value?.invoke())
+    infix fun String.`=`(value: Boolean?) = put(this, value)
+    infix fun String.`=`(value: Enum<*>?) = put(this, value)
+    infix fun String.`=`(value: JsonNode?) = put(this, value)
+    infix fun String.`=`(value: Number?) = put(this, value)
+    infix fun String.`=`(value: String?) = put(this, value)
+    infix fun String.`=`(value: Temporal?) = put(this, value)
+    infix fun String.`=`(value: UUID?) = put(this, value)
+    infix fun String.`=`(value: Duration?) = put(this, value)
 
-    fun put(key: String, value: arr) = put(key, value())
-    fun put(key: String, value: Boolean) = put(key, json(value))
-    fun put(key: String, value: Enum<*>) = put(key, json(value))
-    fun put(key: String, value: Number) = put(key, json(value))
-    fun put(key: String, value: String) = put(key, json(value))
-    fun put(key: String, value: Temporal) = put(key, json(value))
-    fun put(key: String, value: JsonNode) {
+    fun put(key: String, value: arr?) = put(key, value?.invoke())
+    fun put(key: String, value: Boolean?) = if (value != null) put(key, json(value)) else put(key, `null`)
+    fun put(key: String, value: Enum<*>?) = if (value != null) put(key, json(value)) else put(key, `null`)
+    fun put(key: String, value: Number?) = if (value != null) put(key, json(value)) else put(key, `null`)
+    fun put(key: String, value: String?) = if (value != null) put(key, json(value)) else put(key, `null`)
+    fun put(key: String, value: Temporal?) = if (value != null) put(key, json(value)) else put(key, `null`)
+    fun put(key: String, value: UUID?) = if (value != null) put(key, json(value)) else put(key, `null`)
+    fun put(key: String, value: Duration?) = if (value != null) put(key, json(value)) else put(key, `null`)
+    fun put(key: String, value: JsonNode?) {
         node.replace(key, value)
     }
 }
@@ -91,7 +97,7 @@ object arr {
 
 // null
 @JsonMarker
-@Suppress("ClassName")
+@Suppress("ClassName", "JavaIoSerializableObjectMustHaveReadResolve")
 object `null` : NullNode()
 
 // value
@@ -116,6 +122,8 @@ fun json(value: Boolean): ValueNode = JsonNodeFactory.booleanNode(value)
 fun json(value: Enum<*>): ValueNode = JsonNodeFactory.textNode(value.name)
 fun json(value: String): ValueNode = JsonNodeFactory.textNode(value)
 fun json(value: Temporal): ValueNode = JsonNodeFactory.textNode(value.toString())
+fun json(value: Duration): ValueNode = JsonNodeFactory.textNode(value.toString())
+fun json(value: UUID): ValueNode = JsonNodeFactory.textNode(value.toString())
 fun json(value: Number): ValueNode = when (value) {
     is Double -> JsonNodeFactory.numberNode(value.toDouble())
     is Float -> JsonNodeFactory.numberNode(value.toFloat())
