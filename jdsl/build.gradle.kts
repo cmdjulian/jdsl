@@ -140,7 +140,7 @@ publishing {
         create<MavenPublication>("jdsl") {
             groupId = "de.cmdjulian"
             artifactId = "jdsl"
-            version = "1.0.4"
+            version = "1.0.5"
 
             from(components["java"])
             artifact(tasks["sourcesJar"])
