@@ -19,7 +19,7 @@ plugins {
     // sast
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
     // licence scanning
-    id("com.jaredsburrows.license") version "0.9.2"
+    id("com.jaredsburrows.license") version "0.9.8"
 }
 
 kotlin {
