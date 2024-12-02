@@ -15,7 +15,7 @@ plugins {
     // check for dependency updates via task "dependencyUpdates --refresh-dependencies"
     id("com.github.ben-manes.versions") version "0.46.0"
     // linting
-    id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
     // sast
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
     // licence scanning
