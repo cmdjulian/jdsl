@@ -7,9 +7,10 @@ import tools.jackson.databind.ObjectMapper as JacksonObjectMapper
 import tools.jackson.databind.node.ArrayNode as JacksonArrayNode
 import tools.jackson.databind.node.ObjectNode as JacksonObjectNode
 
-val JsonMapper = jsonMapper {
-    addModule(kotlinModule())
-}
+val JsonMapper =
+    jsonMapper {
+        addModule(kotlinModule())
+    }
 
 object Transformers {
     object String : Transformer<kotlin.String, JacksonJsonNode> {
@@ -32,18 +33,17 @@ object Transformers {
         override fun process(element: JacksonNodeBuilder<out JacksonArrayNode>) = element.node
     }
 
-    open class ObjectMapper<T>(private val type: Class<T>, private val mapper: JacksonObjectMapper = JsonMapper) :
-        Transformer<T, JacksonJsonNode> {
-
+    open class ObjectMapper<T>(
+        private val type: Class<T>,
+        private val mapper: JacksonObjectMapper = JsonMapper,
+    ) : Transformer<T, JacksonJsonNode> {
         companion object {
-            inline operator fun <reified T> invoke(mapper: JacksonObjectMapper = JsonMapper): ObjectMapper<T> {
-                return ObjectMapper(T::class.java, mapper)
-            }
+            inline operator fun <reified T> invoke(mapper: JacksonObjectMapper = JsonMapper): ObjectMapper<T> =
+                ObjectMapper(T::class.java, mapper)
         }
 
-        override fun process(element: JacksonNodeBuilder<out JacksonJsonNode>): T {
-            return mapper.treeToValue(element.node, type)
-        }
+        override fun process(element: JacksonNodeBuilder<out JacksonJsonNode>): T =
+            mapper.treeToValue(element.node, type)
     }
 }
 

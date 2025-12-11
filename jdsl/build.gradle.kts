@@ -6,11 +6,11 @@ plugins {
     `maven-publish`
 
     // Gradle task "dependencyCheckAnalyze" to check for security CVEs in dependencies
-    id("org.owasp.dependencycheck") version "8.4.3"
+    id("org.owasp.dependencycheck") version "12.1.9"
     // check for dependency updates via task "dependencyUpdates --refresh-dependencies"
     id("com.github.ben-manes.versions") version "0.53.0"
     // linting
-    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
+    id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
 }
 
 // Set project coordinates for publishing
@@ -37,10 +37,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
-    val kotest = "5.9.1"
-    testImplementation("io.kotest:kotest-runner-junit5:$kotest")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:$kotest")
-    testImplementation("io.kotest:kotest-assertions-json-jvm:$kotest")
+    testImplementation("io.kotest:kotest-runner-junit5:6.0.7")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:6.0.7")
+    testImplementation("io.kotest:kotest-assertions-json-jvm:6.0.7")
 }
 
 tasks {
@@ -91,7 +90,8 @@ fun listConfigurationDependencies(configuration: Configuration) {
         out.append("Total dependencies size:".padEnd(65))
         out.append("${String.format(formatStr, size)} Mb\n\n")
 
-        configuration.sortedBy { -it.length() }
+        configuration
+            .sortedBy { -it.length() }
             .forEach {
                 out.append(it.name.padEnd(65))
                 out.append("${String.format(formatStr, (it.length() / 1024.0))} kb\n")
