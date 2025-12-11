@@ -119,11 +119,11 @@ fun <T, U> json(transformer: Transformer<T, in JsonNode>, generator: () -> U): T
 
 fun json(value: `null`): ValueNode = value
 fun json(value: Boolean): ValueNode = JsonNodeFactory.booleanNode(value)
-fun json(value: Enum<*>): ValueNode = JsonNodeFactory.textNode(value.name)
-fun json(value: String): ValueNode = JsonNodeFactory.textNode(value)
-fun json(value: Temporal): ValueNode = JsonNodeFactory.textNode(value.toString())
-fun json(value: Duration): ValueNode = JsonNodeFactory.textNode(value.toString())
-fun json(value: UUID): ValueNode = JsonNodeFactory.textNode(value.toString())
+fun json(value: Enum<*>): ValueNode = JsonNodeFactory.stringNode(value.name)
+fun json(value: String): ValueNode = JsonNodeFactory.stringNode(value)
+fun json(value: Temporal): ValueNode = JsonNodeFactory.stringNode(value.toString())
+fun json(value: Duration): ValueNode = JsonNodeFactory.stringNode(value.toString())
+fun json(value: UUID): ValueNode = JsonNodeFactory.stringNode(value.toString())
 fun json(value: Number): ValueNode = when (value) {
     is Double -> JsonNodeFactory.numberNode(value)
     is Float -> JsonNodeFactory.numberNode(value)
