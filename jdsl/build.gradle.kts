@@ -11,7 +11,7 @@ plugins {
     `maven-publish`
 
     // Gradle task "dependencyCheckAnalyze" to check for security CVEs in dependencies
-    id("org.owasp.dependencycheck") version "8.2.1"
+    id("org.owasp.dependencycheck") version "8.4.3"
     // check for dependency updates via task "dependencyUpdates --refresh-dependencies"
     id("com.github.ben-manes.versions") version "0.46.0"
     // linting
