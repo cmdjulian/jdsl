@@ -13,6 +13,10 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
 }
 
+// Set project coordinates for publishing
+group = "de.cmdjulian"
+version = "2.0.0"
+
 kotlin {
     jvmToolchain(17)
 }
@@ -101,9 +105,9 @@ fun listConfigurationDependencies(configuration: Configuration) {
 publishing {
     publications {
         create<MavenPublication>("jdsl") {
-            groupId = "de.cmdjulian"
+            groupId = project.group.toString()
             artifactId = "jdsl"
-            version = "2.0.0"
+            version = project.version.toString()
 
             from(components["java"])
             artifact(tasks["sourcesJar"])
@@ -125,6 +129,17 @@ publishing {
                         name.set("Julian Goede")
                     }
                 }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/cmdjulian/jdsl")
+            credentials {
+                // Expect env vars to be provided by CI or local shell
+                username = System.getenv("USERNAME")
+                password = System.getenv("TOKEN")
             }
         }
     }
