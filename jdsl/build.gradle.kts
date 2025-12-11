@@ -4,7 +4,7 @@ import org.gradle.kotlin.dsl.invoke
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
-    kotlin("jvm") version "2.0.10"
+    kotlin("jvm") version "2.2.21"
 
     jacoco
     `java-library`
