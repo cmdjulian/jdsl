@@ -2,16 +2,16 @@
 
 package de.cmdjulian.jdsl
 
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.node.ArrayNode
-import com.fasterxml.jackson.databind.node.NullNode
-import com.fasterxml.jackson.databind.node.ObjectNode
-import com.fasterxml.jackson.databind.node.ValueNode
+import tools.jackson.databind.JsonNode
+import tools.jackson.databind.node.ArrayNode
+import tools.jackson.databind.node.NullNode
+import tools.jackson.databind.node.ObjectNode
+import tools.jackson.databind.node.ValueNode
 import java.time.Duration
 import java.time.temporal.Temporal
 import java.util.*
-import com.fasterxml.jackson.databind.node.JsonNodeFactory.instance as JsonNodeFactory
-import com.fasterxml.jackson.databind.node.ObjectNode as JacksonObjectNode
+import tools.jackson.databind.node.JsonNodeFactory.instance as JsonNodeFactory
+import tools.jackson.databind.node.ObjectNode as JacksonObjectNode
 
 @DslMarker
 annotation class JsonMarker
@@ -125,10 +125,10 @@ fun json(value: Temporal): ValueNode = JsonNodeFactory.textNode(value.toString()
 fun json(value: Duration): ValueNode = JsonNodeFactory.textNode(value.toString())
 fun json(value: UUID): ValueNode = JsonNodeFactory.textNode(value.toString())
 fun json(value: Number): ValueNode = when (value) {
-    is Double -> JsonNodeFactory.numberNode(value.toDouble())
-    is Float -> JsonNodeFactory.numberNode(value.toFloat())
-    is Long -> JsonNodeFactory.numberNode(value.toLong())
-    is Int -> JsonNodeFactory.numberNode(value.toInt())
-    is Short -> JsonNodeFactory.numberNode(value.toShort())
+    is Double -> JsonNodeFactory.numberNode(value)
+    is Float -> JsonNodeFactory.numberNode(value)
+    is Long -> JsonNodeFactory.numberNode(value)
+    is Int -> JsonNodeFactory.numberNode(value)
+    is Short -> JsonNodeFactory.numberNode(value)
     else -> JsonNodeFactory.numberNode(value.toByte())
 }

@@ -1,11 +1,10 @@
 package de.cmdjulian.jdsl
 
-import com.fasterxml.jackson.databind.node.ArrayNode
 import de.cmdjulian.jdsl.JacksonObjectNodeBuilder.Companion.obj
 import io.kotest.matchers.shouldBe
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
-import com.fasterxml.jackson.databind.node.JsonNodeFactory.instance as JsonNodeFactory
+import tools.jackson.databind.node.JsonNodeFactory.instance as JsonNodeFactory
 
 internal class JacksonDslTest {
     @Test
@@ -18,14 +17,14 @@ internal class JacksonDslTest {
 
         node shouldBe JsonNodeFactory.objectNode().apply {
             put("foo", "bar")
-            set<ArrayNode>(
+            set(
                 "fizz",
                 JsonNodeFactory.arrayNode(2).apply {
                     add(1)
                     add(2)
                 }
             )
-            set<ArrayNode>("boo", JsonNodeFactory.arrayNode(0))
+            set("boo", JsonNodeFactory.arrayNode(0))
         }
     }
 

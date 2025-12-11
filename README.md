@@ -6,9 +6,18 @@
 
 Kotlin native DSL for Jackson Object Mapper to describe JSON in code.
 
+## Version compatibility matrix
+
+This table summarizes supported Jackson versions and required JVM baselines per jdsl version, plus notes about breaking changes.
+
+| jdsl version | Jackson version | Minimum JVM version | Notes                                                                                                                                                                                                 |
+|--------------|-----------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| v2.x.x       | 3.x             | 17                  | Breaking change: Jackson 3 migrated packages and removed deprecated APIs; imports change (e.g., com.fasterxml.jackson.databind.json.JsonMapper). Update your imports and ensure you build on JDK 17+. |
+| v1.x.x       | 2.x             | 8                   | Compatible with Jackson 2.x. Project baseline was Java 8.                                                                                                                                             |
+
 ## Adding the Dependency
 
-The library requires at least java 8.  
+jdsl v1.x requires Java 8. jdsl v2.x requires Java 17 (due to Jackson 3).  
 The client can be pulled into gradle or maven by using [jitpack](https://jitpack.io/#cmdjulian/jdsl).
 
 <details>

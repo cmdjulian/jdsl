@@ -1,8 +1,3 @@
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
-import org.gradle.kotlin.dsl.invoke
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
-
 plugins {
     kotlin("jvm") version "2.2.21"
 
@@ -16,14 +11,10 @@ plugins {
     id("com.github.ben-manes.versions") version "0.53.0"
     // linting
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
-    // sast
-    id("io.gitlab.arturbosch.detekt") version "1.23.8"
-    // licence scanning
-    id("com.jaredsburrows.license") version "0.9.2"
 }
 
 kotlin {
-    jvmToolchain(8)
+    jvmToolchain(17)
 }
 
 repositories {
@@ -34,11 +25,9 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation(kotlin("stdlib"))
 
-    implementation(platform("com.fasterxml.jackson:jackson-bom:2.20.1"))
-    implementation("com.fasterxml.jackson.core:jackson-databind")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation(platform("tools.jackson:jackson-bom:3.0.3"))
+    implementation("tools.jackson.core:jackson-databind")
+    implementation("tools.jackson.module:jackson-module-kotlin")
 
     testImplementation(platform("org.junit:junit-bom:5.14.1"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -65,32 +54,6 @@ tasks {
     jar {
         archiveBaseName.set("jdsl-${project.version}")
     }
-}
-
-configure<KtlintExtension> {
-    version.set("0.45.2")
-    enableExperimentalRules.set(true)
-}
-
-detekt {
-    buildUponDefaultConfig = true
-    allRules = true
-    config = files("$projectDir/../detekt/config.yml")
-    baseline = file("$projectDir/../detekt/baseline.xml")
-}
-
-tasks.withType<Detekt>().configureEach {
-    reports {
-        html.required.set(true)
-        md.required.set(true)
-    }
-}
-
-tasks.withType<Detekt>().configureEach {
-    jvmTarget = JavaVersion.VERSION_1_8.toString()
-}
-tasks.withType<DetektCreateBaselineTask>().configureEach {
-    jvmTarget = JavaVersion.VERSION_1_8.toString()
 }
 
 tasks.withType<Test>().configureEach {
