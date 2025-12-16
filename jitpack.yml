@@ -1,0 +1,8 @@
+# Use JDK 17 for Gradle 9.x compatibility
+jdk:
+  - openjdk17
+
+# Instruct JitPack to publish the jdsl module to the local Maven repository
+# with coordinates provided by JitPack (group=com.github.<user>, version=$VERSION)
+install:
+  - ./gradlew -Pgroup=com.github.cmdjulian -Pversion=$VERSION :jdsl:publishToMavenLocal --no-daemon --stacktrace

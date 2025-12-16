@@ -1,21 +1,19 @@
 plugins {
-    kotlin("jvm") version "2.2.21"
+    kotlin("jvm") version "2.3.0"
 
     jacoco
     `java-library`
     `maven-publish`
 
-    // Gradle task "dependencyCheckAnalyze" to check for security CVEs in dependencies
-    id("org.owasp.dependencycheck") version "12.1.9"
     // check for dependency updates via task "dependencyUpdates --refresh-dependencies"
     id("com.github.ben-manes.versions") version "0.53.0"
     // linting
     id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
 }
 
-// Set project coordinates for publishing
-group = "de.cmdjulian"
-version = "2.0.0"
+// Set project coordinates for publishing. Allow overriding via -Pgroup / -Pversion (used by JitPack)
+group = findProperty("group")?.toString() ?: "de.cmdjulian"
+version = findProperty("version")?.toString() ?: "2.0.0"
 
 kotlin {
     jvmToolchain(17)
@@ -55,7 +53,7 @@ tasks {
     }
 
     jar {
-        archiveBaseName.set("jdsl-${project.version}")
+        archiveBaseName.set("jdsl")
     }
 }
 
