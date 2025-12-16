@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "2.3.0"
+    kotlin("jvm") version "2.2.21"
 
     jacoco
     `java-library`
@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "de.cmdjulian"
-version = "2.0.0"
+version = "2.0.1"
 
 kotlin {
     jvmToolchain(17)
