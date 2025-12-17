@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "2.2.21"
+    kotlin("jvm") version "2.3.0"
 
     jacoco
     `java-library`
@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "de.cmdjulian"
-version = "2.0.1"
+version = "2.0.2"
 
 kotlin {
     jvmToolchain(17)
@@ -23,7 +23,6 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation(kotlin("stdlib"))
 
     implementation(platform("tools.jackson:jackson-bom:3.0.3"))
