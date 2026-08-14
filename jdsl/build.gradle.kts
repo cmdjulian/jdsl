@@ -25,7 +25,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    implementation(platform("tools.jackson:jackson-bom:3.0.3"))
+    implementation(platform("tools.jackson:jackson-bom:3.2.2"))
     implementation("tools.jackson.core:jackson-databind")
     implementation("tools.jackson.module:jackson-module-kotlin")
 
