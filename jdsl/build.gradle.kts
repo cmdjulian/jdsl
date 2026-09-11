@@ -35,7 +35,7 @@ dependencies {
 
     testImplementation("io.kotest:kotest-runner-junit5:6.0.7")
     testImplementation("io.kotest:kotest-assertions-core-jvm:6.0.7")
-    testImplementation("io.kotest:kotest-assertions-json-jvm:6.0.7")
+    testImplementation("io.kotest:kotest-assertions-json-jvm:6.2.5")
 }
 
 tasks {
