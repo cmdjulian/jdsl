@@ -33,7 +33,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
-    testImplementation("io.kotest:kotest-runner-junit5:6.0.7")
+    testImplementation("io.kotest:kotest-runner-junit5:6.2.5")
     testImplementation("io.kotest:kotest-assertions-core-jvm:6.0.7")
     testImplementation("io.kotest:kotest-assertions-json-jvm:6.0.7")
 }
