@@ -6,7 +6,7 @@ plugins {
     `maven-publish`
 
     // check for dependency updates via task "dependencyUpdates --refresh-dependencies"
-    id("com.github.ben-manes.versions") version "0.53.0"
+    id("com.github.ben-manes.versions") version "0.62.0"
     // linting
     id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
 }
