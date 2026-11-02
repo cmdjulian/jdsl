@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "de.cmdjulian"
-version = "2.0.2"
+version = "2.0.3"
 
 kotlin {
     jvmToolchain(17)
@@ -74,6 +74,12 @@ publishing {
                 name.set("jdsl")
                 description.set("kotlin dsl for jackson object mapper to describe json structures typesafe as code")
                 url.set("https://github.com/cmdjulian/jdsl")
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
                 scm {
                     url.set("https://github.com/cmdjulian/jdsl")
                 }
